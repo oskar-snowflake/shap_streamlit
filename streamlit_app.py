@@ -9,6 +9,8 @@ from snowflake.snowpark.functions import sproc, udtf, udf, pandas_udf
 import shap
 import pandas as pd
 
+import streamlit as st
+
 snowflake_connection_cfg = {
     "account": st.secrets["account"],
     "user": st.secrets["user"],
