@@ -42,7 +42,7 @@ feature_cols = ['AVG_SESSION_LENGTH',
 
 def load_data(session):
     #Explained rows
-    df_exp = snowpark_df_explained = session.table('ECOMMERCE_CUSTOMERS_100M_SHAP_VALUES').limit(10).to_pandas()
+    df_exp = session.table('ECOMMERCE_CUSTOMERS_100M_SHAP_VALUES').limit(10).to_pandas()
     st.dataframe(df_exp)
 
 if __name__ == "__main__":
