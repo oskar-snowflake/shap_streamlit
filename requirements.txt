@@ -1,3 +1,4 @@
 snowflake-snowpark-python
 shap
 pandas
+streamlit
