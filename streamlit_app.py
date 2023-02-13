@@ -6,16 +6,18 @@ import snowflake.snowpark.functions as F
 import snowflake.snowpark.types as T
 from snowflake.snowpark.functions import sproc, udtf, udf, pandas_udf
 
+snowflake_connection_cfg = {
+    "account": st.secrets["account"],
+    "user": st.secrets["user"],
+    "role": st.secrets["role"],
+    "password": st.secrets["password"],
+    "database": st.secrets["database"],
+    "schema": st.secrets["schema"],
+    "warehouse": st.secrets["warehouse"]
+}
+
 # Creating Snowpark Session
-session = Session.builder.configs(snowflake_connection_cfg).create() USE STREAMLIT SECRETS MANAGER
-
-# Switch schema
-session.use_schema('ML_SHAP')
-
-print('Role:     ', session.get_current_role())
-print('Warehouse:', session.get_current_warehouse())
-print('Database: ', session.get_current_database())
-print('Schema:   ', session.get_current_schema())
+session = Session.builder.configs(snowflake_connection_cfg).create()
 
 feature_cols = ['AVG_SESSION_LENGTH', 
                 'TIME_ON_APP',
@@ -31,4 +33,5 @@ feature_cols = ['AVG_SESSION_LENGTH',
                 'MEMBERSHIP_STATUS_DIAMOND']
 
 snowpark_df_explained = session.table('ECOMMERCE_CUSTOMERS_100M_SHAP_VALUES')
-snowpark_df_explained.limit(5).to_pandas()
+df = snowpark_df_explained.limit(5).to_pandas()
+st.dataframe(df)
