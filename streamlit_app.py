@@ -11,7 +11,11 @@ import pandas as pd
 
 import streamlit as st
 
-snowflake_connection_cfg = {
+
+
+# Creating Snowpark Session
+def create_session_object():
+   connection_parameters = {
     "account": st.secrets["account"],
     "user": st.secrets["user"],
     "role": st.secrets["role"],
@@ -19,10 +23,9 @@ snowflake_connection_cfg = {
     "database": st.secrets["database"],
     "schema": st.secrets["schema"],
     "warehouse": st.secrets["warehouse"]
-}
-
-# Creating Snowpark Session
-session = Session.builder.configs(snowflake_connection_cfg).create()
+    }
+   session = Session.builder.configs(connection_parameters).create()
+   return session
 
 feature_cols = ['AVG_SESSION_LENGTH', 
                 'TIME_ON_APP',
@@ -37,6 +40,12 @@ feature_cols = ['AVG_SESSION_LENGTH',
                 'MEMBERSHIP_STATUS_PLATIN',
                 'MEMBERSHIP_STATUS_DIAMOND']
 
-snowpark_df_explained = session.table('ECOMMERCE_CUSTOMERS_100M_SHAP_VALUES')
-df = snowpark_df_explained.limit(5).to_pandas()
-st.dataframe(df)
+def load_data(session):
+    #Explained rows
+    df_exp = snowpark_df_explained = session.table('ECOMMERCE_CUSTOMERS_100M_SHAP_VALUES').limit(10).to_pandas()
+    st.dataframe(df_exp)
+
+if __name__ == "__main__":
+    session = create_session_object()
+    load_data(session)
+    
