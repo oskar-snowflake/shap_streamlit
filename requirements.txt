@@ -2,3 +2,4 @@ snowflake-snowpark-python
 shap
 pandas
 streamlit
+pyarrow == 10.1.0
