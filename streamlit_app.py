@@ -6,6 +6,9 @@ import snowflake.snowpark.functions as F
 import snowflake.snowpark.types as T
 from snowflake.snowpark.functions import sproc, udtf, udf, pandas_udf
 
+import shap
+import pandas as pd
+
 snowflake_connection_cfg = {
     "account": st.secrets["account"],
     "user": st.secrets["user"],
